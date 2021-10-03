@@ -44,8 +44,8 @@ const getAllUserPets = function(request, response) {
 };
 
 // create and update calls - i should split them up but i wont <3
-app.post("/createOrUpdatePet", bodyParser.json(), (request, response) => {
-  console.log(request.body);
+app.post("/create", bodyParser.json(), (request, response) => {
+  console.log("Create or update: " + JSON.stringify(request.body));
   let obj = request.body;
   if (obj.name !== "" && obj.link !== "" && obj.type !== "") {
     obj.call = decideCall(obj.type);
@@ -97,7 +97,6 @@ const updatePet = function(request, response, obj) {
         }
       },
       function(err, ress) {
-        if (err) getAllUserPetsError(request, response, "There was an error updating your pet! Try Again later.");
         getAllUserPets(request, response);
       }
   );
@@ -107,18 +106,15 @@ const updatePet = function(request, response, obj) {
 const createPet = function(request, response, obj) {
   obj.user = ObjectId("6148b6813e52f8cadd08544d"); // auto login to test test user
   collection.insertOne(obj, function(err, ress) {
-    if (err) getAllUserPetsError(request, response, "There was an error creating your new pet! Try Again later.");
     getAllUserPets(request, response);
   });
 };
 
 // DELETE
 app.post("/delete", bodyParser.json(), (request, response) => {
-  console.log("Delete: " + request.body);
+  console.log("Delete: " + JSON.stringify(request.body));
   let idObj = request.body;
-  console.log(idObj);
   collection.deleteOne({ _id: ObjectId(idObj.id) }, function(err, ress) {
-    if (err) getAllUserPetsError(request, response, "There was an error deleting your pet! Try Again later.");
     getAllUserPets(request, response);
   });
 });
