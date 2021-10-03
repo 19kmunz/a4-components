@@ -33,9 +33,7 @@ client
 
 // GET - get current db state of pet gallery
 app.get("/get", (request, response) => {
-  if (request.hasOwnProperty("session")) {
-    getAllUserPets(request, response);
-  }
+  getAllUserPets(request, response);
 });
 
 const getAllUserPets = function(request, response) {
