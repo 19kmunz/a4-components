@@ -1,10 +1,10 @@
 
 import React from "react";
 import './css/style.css';
+import PetTile from "./PetTile.jsx";
 
 class App extends React.Component {
   render() {
-    const { name } = this.props;
     return (
       <>
         <h1>Pet Gallery!</h1>
@@ -23,38 +23,9 @@ class App extends React.Component {
           <button id="createPet">Post That Pet!</button>
         </form>
         <ul id="gallery">
-          <li>
-            <figure>
-              <img className="petTile"
-                   src="https://cdn.discordapp.com/attachments/428381972545404928/884522236025913374/image0.jpg"
-                   alt="Cute picture of Pippi"/>
-                <figcaption>Pippi says WOOF</figcaption>
-            </figure>
-            <button id="1" onClick="deleteEntry(this.id)"
-                    className="delete">Delete
-            </button>
-          </li>
-          <li>
-            <figure>
-              <img className="petTile"
-                   src="https://cdn.discordapp.com/attachments/428381972545404928/884522261237882910/image0.jpg"
-                   alt="Cute picture of Mordecai"/>
-                <figcaption>Mordecai says MEOW</figcaption>
-            </figure>
-            <button id="2" onClick="deleteEntry(this.id)"
-                    className="delete">Delete
-            </button>
-          </li>
-          <li>
-            <figure>
-              <img className="petTile" src="https://i.imgur.com/Db4cRax.png"
-                   alt="Cute picture of Bubba"/>
-                <figcaption>Bubba says HI</figcaption>
-            </figure>
-            <button id="3" onClick="deleteEntry(this.id)"
-                    className="delete">Delete
-            </button>
-          </li>
+          <PetTile name="Pippi" image="https://cdn.discordapp.com/attachments/428381972545404928/884522236025913374/image0.jpg" call="WOOF" id="1"/>
+          <PetTile name="Mordecai" image="https://cdn.discordapp.com/attachments/428381972545404928/884522261237882910/image0.jpg" call="MEOW" id="2"/>
+          <PetTile name="Bubba" image="https://i.imgur.com/Db4cRax.png" call="I LOVE YOU" id="3"/>
         </ul>
       </>
     );

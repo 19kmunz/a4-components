@@ -1,5 +1,6 @@
 import React from "./_snowpack/pkg/react.js";
 import "./css/style.css.proxy.js";
+import PetTile from "./PetTile.js";
 class App extends React.Component {
   render() {
     const {name} = this.props;
@@ -15,31 +16,22 @@ class App extends React.Component {
       id: "createPet"
     }, "Post That Pet!")), /* @__PURE__ */ React.createElement("ul", {
       id: "gallery"
-    }, /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("figure", null, /* @__PURE__ */ React.createElement("img", {
-      className: "petTile",
-      src: "https://cdn.discordapp.com/attachments/428381972545404928/884522236025913374/image0.jpg",
-      alt: "Cute picture of Pippi"
-    }), /* @__PURE__ */ React.createElement("figcaption", null, "Pippi says WOOF")), /* @__PURE__ */ React.createElement("button", {
-      id: "1",
-      onClick: "deleteEntry(this.id)",
-      className: "delete"
-    }, "Delete")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("figure", null, /* @__PURE__ */ React.createElement("img", {
-      className: "petTile",
-      src: "https://cdn.discordapp.com/attachments/428381972545404928/884522261237882910/image0.jpg",
-      alt: "Cute picture of Mordecai"
-    }), /* @__PURE__ */ React.createElement("figcaption", null, "Mordecai says MEOW")), /* @__PURE__ */ React.createElement("button", {
-      id: "2",
-      onClick: "deleteEntry(this.id)",
-      className: "delete"
-    }, "Delete")), /* @__PURE__ */ React.createElement("li", null, /* @__PURE__ */ React.createElement("figure", null, /* @__PURE__ */ React.createElement("img", {
-      className: "petTile",
-      src: "https://i.imgur.com/Db4cRax.png",
-      alt: "Cute picture of Bubba"
-    }), /* @__PURE__ */ React.createElement("figcaption", null, "Bubba says HI")), /* @__PURE__ */ React.createElement("button", {
-      id: "3",
-      onClick: "deleteEntry(this.id)",
-      className: "delete"
-    }, "Delete"))));
+    }, /* @__PURE__ */ React.createElement(PetTile, {
+      name: "Pippi",
+      image: "https://cdn.discordapp.com/attachments/428381972545404928/884522236025913374/image0.jpg",
+      call: "WOOF",
+      id: "1"
+    }), /* @__PURE__ */ React.createElement(PetTile, {
+      name: "Mordecai",
+      image: "https://cdn.discordapp.com/attachments/428381972545404928/884522261237882910/image0.jpg",
+      call: "MEOW",
+      id: "2"
+    }), /* @__PURE__ */ React.createElement(PetTile, {
+      name: "Bubba",
+      image: "https://i.imgur.com/Db4cRax.png",
+      call: "I LOVE YOU",
+      id: "3"
+    })));
   }
 }
 export default App;
