@@ -21,7 +21,7 @@ class PetTile extends React.Component {
     );
   }
 
-  change(e) {
+  change() {
     this.props.onclick(this.props.id)
   }
 }
