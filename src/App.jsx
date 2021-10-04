@@ -4,6 +4,13 @@ import './css/style.css';
 
 
 class PetTile extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // This binding is necessary to make `this` work in the callback
+    this.change = this.change.bind(this);
+  }
+
   render()
   {
     return (
@@ -22,6 +29,7 @@ class PetTile extends React.Component {
   }
 
   change() {
+    console.log("This in Change: " + this)
     this.props.onclick(this.props.id)
   }
 }
@@ -30,6 +38,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { pets: []}
+    this.addEntry = this.addEntry.bind(this);
+    this.deleteEntry = this.deleteEntry.bind(this);
     this.load()
   }
   load() {
@@ -40,46 +50,6 @@ class App extends React.Component {
       console.log("GOT: " + JSON.stringify(json))
       this.setState({ pets: json })
     })
-  }
-  addEntry(e) {
-    e.preventDefault();
-
-    const name = document.querySelector( 'input[name="name"]' ),
-        link = document.querySelector( 'input[name="link"]' ),
-        type = document.querySelector( 'select[name="type"]' ),
-        json = { name: name.value, link: link.value, type: type.value },
-        body = JSON.stringify( json );
-
-    console.log(body);
-    fetch( '/create', {
-      method:'POST',
-      'no-cors':true,
-      body: body
-    })
-    .then( function( response ) {
-      return response.json();
-    })
-    .then( function(state) {
-      console.log("POSTED: " + JSON.stringify(state))
-      this.setState({ pets: state })
-    });
-  }
-
-  deleteEntry (clickedId) {
-    console.log("Delete ID: " + clickedId);
-    const body = JSON.stringify({"id": clickedId});
-    fetch( '/delete', {
-      method:'POST',
-      'no-cors':true,
-      body: body
-    })
-    .then( function( response ) {
-      return response.json();
-    })
-    .then( function(json) {
-      console.log("DELETED: " + JSON.stringify(json));
-      this.setState({ pets: json })
-    });
   }
 
   render() {
@@ -102,10 +72,51 @@ class App extends React.Component {
           <button id="createPet" onClick={ e => this.addEntry(e) }>Post That Pet!</button>
         </form>
         <ul id="gallery">
-          { this.state.pets.map( (pet, i) => <PetTile name={pet.name} image={pet.link} call={pet.call} id={pet._id} onclick={() => { this.deleteEntry }}/> ) }
+          { this.state.pets.map( (pet, i) => <PetTile name={pet.name} image={pet.link} call={pet.call} id={pet._id} onclick={this.deleteEntry}/> ) }
         </ul>
       </>
     );
+  }
+
+  addEntry(e) {
+    e.preventDefault();
+
+    const name = document.querySelector( 'input[name="name"]' ),
+        link = document.querySelector( 'input[name="link"]' ),
+        type = document.querySelector( 'select[name="type"]' ),
+        json = { name: name.value, link: link.value, type: type.value },
+        body = JSON.stringify( json );
+
+    console.log("Add Body: " + body);
+    fetch( '/create', {
+      method:'POST',
+      body: body
+    })
+    .then( function( response ) {
+      return response.json();
+    })
+    .then( function(arg) {
+      //console.log("POSTED: " + JSON.stringify(arg))
+      console.log("This in AddEntry: " + this)
+      this.setState({ pets: arg })
+    });
+  }
+
+  deleteEntry (clickedId) {
+    const body = JSON.stringify({"id": clickedId});
+    console.log("Delete Body: " + body);
+    fetch( '/delete', {
+      method:'POST',
+      body: body
+    })
+    .then( function( response ) {
+      return response.json();
+    })
+    .then( function(json) {
+      //console.log("DELETED: " + JSON.stringify(json));
+      console.log("This in Delete: " + this)
+      this.setState({ pets: json })
+    });
   }
 }
 
