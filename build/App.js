@@ -8,13 +8,11 @@ class PetTile extends React.Component {
       alt: "Cute picture of " + this.props.name
     }), /* @__PURE__ */ React.createElement("figcaption", null, this.props.name, " says ", this.props.call)), /* @__PURE__ */ React.createElement("button", {
       id: this.props.id,
-      onClick: () => {
-        this.change(e);
-      },
+      onClick: this.change,
       className: "delete"
     }, "Delete"));
   }
-  change(e2) {
+  change() {
     this.props.onclick(this.props.id);
   }
 }
@@ -22,8 +20,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {pets: []};
-    this.addEntry = this.addEntry.bind(this);
-    this.deleteEntry = this.deleteEntry.bind(this);
     this.load();
   }
   load() {
@@ -33,8 +29,8 @@ class App extends React.Component {
       this.setState({pets: json});
     });
   }
-  addEntry(e2) {
-    e2.preventDefault();
+  addEntry(e) {
+    e.preventDefault();
     const name = document.querySelector('input[name="name"]'), link = document.querySelector('input[name="link"]'), type = document.querySelector('select[name="type"]'), json = {name: name.value, link: link.value, type: type.value}, body = JSON.stringify(json);
     console.log(body);
     fetch("/create", {
@@ -73,7 +69,7 @@ class App extends React.Component {
       name: "type"
     }, /* @__PURE__ */ React.createElement("option", null, "Dog"), /* @__PURE__ */ React.createElement("option", null, "Cat"), /* @__PURE__ */ React.createElement("option", null, "Snake"), /* @__PURE__ */ React.createElement("option", null, "Snake"), /* @__PURE__ */ React.createElement("option", null, "Bird"), /* @__PURE__ */ React.createElement("option", null, "Other"))), /* @__PURE__ */ React.createElement("button", {
       id: "createPet",
-      onClick: (e2) => this.addEntry(e2)
+      onClick: (e) => this.addEntry(e)
     }, "Post That Pet!")), /* @__PURE__ */ React.createElement("ul", {
       id: "gallery"
     }, this.state.pets.map((pet, i) => /* @__PURE__ */ React.createElement(PetTile, {

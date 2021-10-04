@@ -14,14 +14,14 @@ class PetTile extends React.Component {
                  alt={"Cute picture of " + this.props.name}/>
             <figcaption>{this.props.name} says {this.props.call}</figcaption>
           </figure>
-          <button id={this.props.id} onClick={e => {this.change(e)}}
+          <button id={this.props.id} onClick={this.change}
                   className="delete">Delete
           </button>
         </li>
     );
   }
 
-  change(e) {
+  change() {
     this.props.onclick(this.props.id)
   }
 }
