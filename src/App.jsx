@@ -29,7 +29,6 @@ class PetTile extends React.Component {
   }
 
   change() {
-    console.log("This in Change: " + this)
     this.props.onclick(this.props.id)
   }
 }
@@ -43,11 +42,9 @@ class App extends React.Component {
     this.load()
   }
   load() {
-    console.log("LOADING")
     fetch( '/get', { method:'get', 'no-cors':true })
     .then( response => response.json() )
     .then( json => {
-      console.log("GOT: " + JSON.stringify(json))
       this.setState({ pets: json })
     })
   }
@@ -87,34 +84,34 @@ class App extends React.Component {
         json = { name: name.value, link: link.value, type: type.value },
         body = JSON.stringify( json );
 
-    console.log("Add Body: " + body);
     fetch( '/create', {
       method:'POST',
-      body: body
+      body: body,
+      headers:{
+        "Content-Type": "application/json"
+      }
     })
     .then( function( response ) {
       return response.json();
     })
-    .then( function(arg) {
-      //console.log("POSTED: " + JSON.stringify(arg))
-      console.log("This in AddEntry: " + this)
+    .then( arg => {
       this.setState({ pets: arg })
     });
   }
 
   deleteEntry (clickedId) {
     const body = JSON.stringify({"id": clickedId});
-    console.log("Delete Body: " + body);
     fetch( '/delete', {
       method:'POST',
-      body: body
+      body: body,
+      headers:{
+        "Content-Type": "application/json"
+      }
     })
     .then( function( response ) {
       return response.json();
     })
-    .then( function(json) {
-      //console.log("DELETED: " + JSON.stringify(json));
-      console.log("This in Delete: " + this)
+    .then( json => {
       this.setState({ pets: json })
     });
   }
